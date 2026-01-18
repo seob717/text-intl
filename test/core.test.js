@@ -10,16 +10,16 @@ describe('i18n Core', () => {
         en: {
           common: {
             hello: 'Hello',
-            'hello_name': 'Hello {name}',
-          }
+            hello_name: 'Hello {name}',
+          },
         },
         ko: {
           common: {
             hello: '안녕하세요',
-            'hello_name': '안녕하세요 {name}',
-          }
-        }
-      }
+            hello_name: '안녕하세요 {name}',
+          },
+        },
+      },
     });
   });
 
@@ -28,8 +28,8 @@ describe('i18n Core', () => {
       init({
         locale: 'en',
         messages: {
-          en: { common: { test: 'Test' } }
-        }
+          en: { common: { test: 'Test' } },
+        },
       });
       expect(getLocale()).toBe('en');
     });
@@ -69,10 +69,11 @@ describe('i18n Core', () => {
           en: {
             common: {
               items: '{count, plural, =0 {no items} one {# item} other {# items}}',
-              followers: '{count, plural, =0 {no followers yet} one {# follower} other {# followers}}',
-            }
-          }
-        }
+              followers:
+                '{count, plural, =0 {no followers yet} one {# follower} other {# followers}}',
+            },
+          },
+        },
       });
     });
 
@@ -98,10 +99,11 @@ describe('i18n Core', () => {
         messages: {
           ru: {
             common: {
-              items: '{count, plural, one {# предмет} few {# предмета} many {# предметов} other {# предметов}}',
-            }
-          }
-        }
+              items:
+                '{count, plural, one {# предмет} few {# предмета} many {# предметов} other {# предметов}}',
+            },
+          },
+        },
       });
 
       expect(t('items', { count: 1 })).toBe('1 предмет');
@@ -118,10 +120,11 @@ describe('i18n Core', () => {
           en: {
             common: {
               gender_message: '{gender, select, male {He} female {She} other {They}} liked this',
-              status: '{status, select, pending {Processing} completed {Done} failed {Error} other {Unknown}}',
-            }
-          }
-        }
+              status:
+                '{status, select, pending {Processing} completed {Done} failed {Error} other {Unknown}}',
+            },
+          },
+        },
       });
     });
 
@@ -151,22 +154,26 @@ describe('i18n Core', () => {
         messages: {
           en: {
             common: {
-              complex: '{name} has {count, plural, =0 {no items} one {# item} other {# items}} in {container, select, cart {cart} wishlist {wishlist} other {list}}',
-            }
-          }
-        }
+              complex:
+                '{name} has {count, plural, =0 {no items} one {# item} other {# items}} in {container, select, cart {cart} wishlist {wishlist} other {list}}',
+            },
+          },
+        },
       });
     });
 
     it('should handle plural + select combination', () => {
-      expect(t('complex', { name: 'John', count: 0, container: 'cart' }))
-        .toBe('John has no items in cart');
-      
-      expect(t('complex', { name: 'Jane', count: 1, container: 'wishlist' }))
-        .toBe('Jane has 1 item in wishlist');
-      
-      expect(t('complex', { name: 'Bob', count: 5, container: 'unknown' }))
-        .toBe('Bob has 5 items in list');
+      expect(t('complex', { name: 'John', count: 0, container: 'cart' })).toBe(
+        'John has no items in cart'
+      );
+
+      expect(t('complex', { name: 'Jane', count: 1, container: 'wishlist' })).toBe(
+        'Jane has 1 item in wishlist'
+      );
+
+      expect(t('complex', { name: 'Bob', count: 5, container: 'unknown' })).toBe(
+        'Bob has 5 items in list'
+      );
     });
   });
 
@@ -177,10 +184,11 @@ describe('i18n Core', () => {
         messages: {
           en: {
             common: {
-              attendees: '{count, plural, offset:1 =0 {Nobody} =1 {Just you} one {You and # other} other {You and # others}}',
-            }
-          }
-        }
+              attendees:
+                '{count, plural, offset:1 =0 {Nobody} =1 {Just you} one {You and # other} other {You and # others}}',
+            },
+          },
+        },
       });
     });
 
@@ -217,15 +225,15 @@ describe('i18n Core', () => {
           en: {
             common: {
               hello: 'Hello',
-            }
+            },
           },
           ko: {
             common: {
               hello: '안녕하세요',
               korean_only: '한국어만',
-            }
-          }
-        }
+            },
+          },
+        },
       });
     });
 
@@ -249,9 +257,9 @@ describe('i18n Core', () => {
             },
             cart: {
               add: 'Add to cart',
-            }
-          }
-        }
+            },
+          },
+        },
       });
     });
 
@@ -276,9 +284,9 @@ describe('i18n Core', () => {
           en: {
             common: {
               broken: '{count, plural, one {# item}', // Missing closing brace
-            }
-          }
-        }
+            },
+          },
+        },
       });
 
       // Should return original message on error
@@ -293,9 +301,9 @@ describe('i18n Core', () => {
           en: {
             common: {
               code: 'Use {variable} for substitution',
-            }
-          }
-        }
+            },
+          },
+        },
       });
 
       expect(t('code', { variable: 'count' })).toBe('Use count for substitution');
@@ -309,35 +317,35 @@ describe('i18n Core', () => {
         messages: {
           en: {
             common: {
-              'a1b2c3d4': 'Hello',
-              'e5f6g7h8': 'Hello {name}',
-              'f9e8d7c6': '{count, plural, =0 {no items} one {# item} other {# items}}',
-            }
+              a1b2c3d4: 'Hello',
+              e5f6g7h8: 'Hello {name}',
+              f9e8d7c6: '{count, plural, =0 {no items} one {# item} other {# items}}',
+            },
           },
           ko: {
             common: {
-              'a1b2c3d4': '안녕하세요',
-              'e5f6g7h8': '안녕하세요 {name}',
-              'f9e8d7c6': '{count, plural, =0 {항목 없음} other {# 개 항목}}',
-            }
-          }
+              a1b2c3d4: '안녕하세요',
+              e5f6g7h8: '안녕하세요 {name}',
+              f9e8d7c6: '{count, plural, =0 {항목 없음} other {# 개 항목}}',
+            },
+          },
         },
         meta: {
           en: {
             common: {
-              'Hello': 'a1b2c3d4',
+              Hello: 'a1b2c3d4',
               'Hello {name}': 'e5f6g7h8',
               '{count, plural, =0 {no items} one {# item} other {# items}}': 'f9e8d7c6',
-            }
+            },
           },
           ko: {
             common: {
-              'Hello': 'a1b2c3d4',
+              Hello: 'a1b2c3d4',
               'Hello {name}': 'e5f6g7h8',
               '{count, plural, =0 {no items} one {# item} other {# items}}': 'f9e8d7c6',
-            }
-          }
-        }
+            },
+          },
+        },
       });
     });
 
@@ -350,12 +358,15 @@ describe('i18n Core', () => {
     });
 
     it('should translate ICU plural using source text', () => {
-      expect(t('{count, plural, =0 {no items} one {# item} other {# items}}', { count: 0 }))
-        .toBe('no items');
-      expect(t('{count, plural, =0 {no items} one {# item} other {# items}}', { count: 1 }))
-        .toBe('1 item');
-      expect(t('{count, plural, =0 {no items} one {# item} other {# items}}', { count: 5 }))
-        .toBe('5 items');
+      expect(t('{count, plural, =0 {no items} one {# item} other {# items}}', { count: 0 })).toBe(
+        'no items'
+      );
+      expect(t('{count, plural, =0 {no items} one {# item} other {# items}}', { count: 1 })).toBe(
+        '1 item'
+      );
+      expect(t('{count, plural, =0 {no items} one {# item} other {# items}}', { count: 5 })).toBe(
+        '5 items'
+      );
     });
 
     it('should use correct translation for locale', () => {
@@ -375,29 +386,29 @@ describe('i18n Core', () => {
         messages: {
           en: {
             common: {
-              'hash1': 'Hello',
-            }
+              hash1: 'Hello',
+            },
           },
           ko: {
             common: {
-              'hash1': '안녕하세요',
-              'hash2': '한국어만',
-            }
-          }
+              hash1: '안녕하세요',
+              hash2: '한국어만',
+            },
+          },
         },
         meta: {
           en: {
             common: {
-              'Hello': 'hash1',
-            }
+              Hello: 'hash1',
+            },
           },
           ko: {
             common: {
-              'Hello': 'hash1',
+              Hello: 'hash1',
               'Korean only': 'hash2',
-            }
-          }
-        }
+            },
+          },
+        },
       });
 
       expect(t('Hello')).toBe('Hello');
@@ -412,11 +423,11 @@ describe('i18n Core', () => {
         messages: {
           en: {
             common: {
-              'Hello': 'Hello World',
-              'Goodbye': 'Goodbye World',
-            }
-          }
-        }
+              Hello: 'Hello World',
+              Goodbye: 'Goodbye World',
+            },
+          },
+        },
         // No meta provided
       });
 
@@ -430,18 +441,18 @@ describe('i18n Core', () => {
         messages: {
           en: {
             common: {
-              'test_key': 'Direct Key Value',
-              'hash123': 'Meta Value',
-            }
-          }
+              test_key: 'Direct Key Value',
+              hash123: 'Meta Value',
+            },
+          },
         },
         meta: {
           en: {
             common: {
-              'test_key': 'hash123', // Maps test_key to hash123
-            }
-          }
-        }
+              test_key: 'hash123', // Maps test_key to hash123
+            },
+          },
+        },
       });
 
       // Should use meta mapping

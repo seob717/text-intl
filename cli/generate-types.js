@@ -20,15 +20,15 @@ export function generateTypes(config, cwd = process.cwd()) {
 
   // Read all namespaces from source locale
   const files = readdirSync(sourceLocaleDir);
-  
+
   for (const file of files) {
     if (!file.endsWith('.meta.json')) continue;
-    
+
     const namespace = file.replace('.meta.json', '');
     const metaPath = resolve(sourceLocaleDir, file);
-    
+
     if (!existsSync(metaPath)) continue;
-    
+
     const meta = JSON.parse(readFileSync(metaPath, 'utf-8'));
     namespaces[namespace] = Object.keys(meta);
   }
@@ -39,13 +39,13 @@ export function generateTypes(config, cwd = process.cwd()) {
  * Do not edit manually - generated from meta files
  */
 
-export type Locale = ${config.locales.map(l => `'${l}'`).join(' | ')};
+export type Locale = ${config.locales.map((l) => `'${l}'`).join(' | ')};
 
 `;
 
   for (const [namespace, keys] of Object.entries(namespaces)) {
     const sortedKeys = keys.sort();
-    const typeLines = sortedKeys.map(key => {
+    const typeLines = sortedKeys.map((key) => {
       // Escape special characters for TypeScript string literals
       const escaped = key
         .replace(/\\/g, '\\\\')
@@ -59,7 +59,9 @@ export type Locale = ${config.locales.map(l => `'${l}'`).join(' | ')};
   }
 
   // Generate namespace type
-  typeDefinition += `export type Namespace = ${Object.keys(namespaces).map(n => `'${n}'`).join(' | ')};\n\n`;
+  typeDefinition += `export type Namespace = ${Object.keys(namespaces)
+    .map((n) => `'${n}'`)
+    .join(' | ')};\n\n`;
 
   // Generate Messages type
   typeDefinition += `export type Messages = {\n`;
@@ -73,9 +75,9 @@ export type Locale = ${config.locales.map(l => `'${l}'`).join(' | ')};
   // Write to file
   const outputPath = resolve(messagesDir, 'types.ts');
   writeFileSync(outputPath, typeDefinition, 'utf-8');
-  
+
   console.log(`✅ Generated types: ${outputPath}`);
-  
+
   return outputPath;
 }
 

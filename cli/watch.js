@@ -31,10 +31,10 @@ export async function watchFiles(config, cwd = process.cwd()) {
   };
 
   // Watch source files
-  const patterns = config.include.map(pattern => resolve(cwd, pattern));
+  const patterns = config.include.map((pattern) => resolve(cwd, pattern));
 
   const watcher = chokidar.watch(patterns, {
-    ignored: config.exclude?.map(pattern => resolve(cwd, pattern)),
+    ignored: config.exclude?.map((pattern) => resolve(cwd, pattern)),
     persistent: true,
     ignoreInitial: true,
   });

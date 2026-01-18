@@ -4,7 +4,6 @@
  * CLI entry point
  */
 
-import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { extractMessages } from './extract.js';
 import { watchFiles } from './watch.js';
@@ -19,7 +18,7 @@ async function loadConfig() {
     try {
       const { default: config } = await import(configPath);
       return config;
-    } catch (error) {
+    } catch {
       // Try next extension
     }
   }
