@@ -1,0 +1,98 @@
+{
+  "name": "text-intl",
+  "version": "1.0.0",
+  "description": "Intuitive i18n with plain text keys",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js",
+      "require": "./dist/config.cjs"
+    },
+    "./errors": {
+      "types": "./dist/errors.d.ts",
+      "import": "./dist/errors.js",
+      "require": "./dist/errors.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "cli",
+    "src/*.d.ts"
+  ],
+  "sideEffects": false,
+  "bin": {
+    "text-intl": "./cli/index.js"
+  },
+  "scripts": {
+    "build": "tsup && pnpm build:types",
+    "build:types": "node scripts/copy-types.js",
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "pnpm build && pnpm test"
+  },
+  "keywords": [
+    "i18n",
+    "intl",
+    "internationalization",
+    "text-keys",
+    "gettext",
+    "natural-keys",
+    "typescript",
+    "type-safe",
+    "icu-messageformat",
+    "developer-experience",
+    "react",
+    "nextjs",
+    "auto-extract"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seob717/text-intl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seob717/text-intl/issues"
+  },
+  "homepage": "https://github.com/seob717/text-intl#readme",
+  "dependencies": {
+    "intl-messageformat": "^10.7.6"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@babel/parser": "^7.28.6",
+    "@babel/traverse": "^7.28.6",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@types/react": "^19.0.6",
+    "chokidar": "^3.6.0",
+    "glob": "^10.4.0",
+    "jsdom": "^25.0.1",
+    "react": "^19.2.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
