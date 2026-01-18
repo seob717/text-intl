@@ -26,6 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
         with:
@@ -33,13 +35,18 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           registry-url: https://registry.npmjs.org/
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build --if-present
-      - run: pnpm test --if-present
+      - run: pnpm build
+      - run: pnpm test
 
-      # ✅ 토큰/OTP 없이 배포
-      - run: npm publish
+      - name: Ensure npm uses public registry without tokens
+        run: |
+          rm -f ~/.npmrc
+          npm config set registry https://registry.npmjs.org/
+          npm config delete //registry.npmjs.org/:_authToken || true
+
+      - run: npm publish --provenance
