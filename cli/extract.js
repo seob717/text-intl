@@ -19,10 +19,7 @@ const DEFAULT_NAMESPACE = 'common';
  * @returns {string} Hash string (8 chars)
  */
 function generateMessageHash(text) {
-  return createHash('sha256')
-    .update(text, 'utf8')
-    .digest('hex')
-    .substring(0, 8);
+  return createHash('sha256').update(text, 'utf8').digest('hex').substring(0, 8);
 }
 
 /**
@@ -52,10 +49,7 @@ function extractFromFile(filePath) {
       // or: const { t: translate } = useTranslation('namespace')
       VariableDeclarator(path) {
         const init = path.node.init;
-        if (
-          init?.type === 'CallExpression' &&
-          init.callee?.name === 'useTranslation'
-        ) {
+        if (init?.type === 'CallExpression' && init.callee?.name === 'useTranslation') {
           // Get namespace from argument (default: 'common')
           const namespace = init.arguments[0]?.value || DEFAULT_NAMESPACE;
 
@@ -158,7 +152,7 @@ export async function extractMessages(config, cwd = process.cwd()) {
       // File paths
       const namespacePath = resolve(localeDir, `${namespace}.json`);
       const metaPath = resolve(localeDir, `${namespace}.meta.json`);
-      
+
       // Load existing files
       let existingMessages = {};
       let existingMeta = {};
@@ -177,18 +171,18 @@ export async function extractMessages(config, cwd = process.cwd()) {
       for (const sourceText of messages) {
         // Check if we already have a hash for this source text
         let hash = existingMeta[sourceText];
-        
+
         if (!hash) {
           // Generate new hash
           hash = generateMessageHash(sourceText);
-          
+
           // Handle hash collision (unlikely but possible)
           let attempts = 0;
           while (Object.values(updatedMeta).includes(hash) && attempts < 100) {
             hash = generateMessageHash(sourceText + attempts);
             attempts++;
           }
-          
+
           newCount++;
         }
 
@@ -198,9 +192,12 @@ export async function extractMessages(config, cwd = process.cwd()) {
         // Update message translation
         // If translation exists, preserve it; otherwise set to source for sourceLocale
         const existingTranslation = existingMessages[hash];
-        updatedMessages[hash] = existingTranslation !== undefined 
-          ? existingTranslation 
-          : (locale === config.sourceLocale ? sourceText : '');
+        updatedMessages[hash] =
+          existingTranslation !== undefined
+            ? existingTranslation
+            : locale === config.sourceLocale
+              ? sourceText
+              : '';
       }
 
       // Remove deleted messages (messages not in current extraction)
@@ -271,15 +268,15 @@ function generateTypes(config, messagesDir) {
   const namespaces = {};
 
   const files = readdirSync(sourceLocaleDir);
-  
+
   for (const file of files) {
     if (!file.endsWith('.meta.json')) continue;
-    
+
     const namespace = file.replace('.meta.json', '');
     const metaPath = resolve(sourceLocaleDir, file);
-    
+
     if (!existsSync(metaPath)) continue;
-    
+
     const meta = JSON.parse(readFileSync(metaPath, 'utf-8'));
     namespaces[namespace] = Object.keys(meta);
   }
@@ -305,13 +302,13 @@ function generateTypes(config, messagesDir) {
 
 import type { TagHandler } from '@unknown/i18n';
 
-export type Locale = ${config.locales.map(l => `'${l}'`).join(' | ')};
+export type Locale = ${config.locales.map((l) => `'${l}'`).join(' | ')};
 
 `;
 
   for (const [namespace, keys] of Object.entries(namespaces)) {
     const sortedKeys = keys.sort();
-    const typeLines = sortedKeys.map(key => {
+    const typeLines = sortedKeys.map((key) => {
       // Escape special characters for TypeScript string literals
       const escaped = key
         .replace(/\\/g, '\\\\')
@@ -326,7 +323,9 @@ export type Locale = ${config.locales.map(l => `'${l}'`).join(' | ')};
   }
 
   // Generate namespace type
-  typeDefinition += `export type Namespace = ${Object.keys(namespaces).map(n => `'${n}'`).join(' | ')};\n\n`;
+  typeDefinition += `export type Namespace = ${Object.keys(namespaces)
+    .map((n) => `'${n}'`)
+    .join(' | ')};\n\n`;
 
   // Generate parameter types for each message
   typeDefinition += `export type MessageParams<T extends string> = \n`;
@@ -338,12 +337,12 @@ export type Locale = ${config.locales.map(l => `'${l}'`).join(' | ')};
         .replace(/'/g, "\\'")
         .replace(/\n/g, '\\n')
         .replace(/\r/g, '\\r');
-      
+
       if (params.variables.length === 0 && params.tags.length === 0) {
         typeDefinition += `  T extends '${escaped}' ? undefined :\n`;
       } else {
-        const varTypes = params.variables.map(v => `${v}: string | number | Date | boolean`);
-        const tagTypes = params.tags.map(t => `${t}?: TagHandler`);
+        const varTypes = params.variables.map((v) => `${v}: string | number | Date | boolean`);
+        const tagTypes = params.tags.map((t) => `${t}?: TagHandler`);
         const allTypes = [...varTypes, ...tagTypes].join('; ');
         typeDefinition += `  T extends '${escaped}' ? { ${allTypes} } :\n`;
       }
@@ -354,7 +353,7 @@ export type Locale = ${config.locales.map(l => `'${l}'`).join(' | ')};
   // Write to file
   const outputPath = resolve(messagesDir, 'types.ts');
   writeFileSync(outputPath, typeDefinition, 'utf-8');
-  
+
   console.log(`✅ Generated types: ${outputPath}`);
 }
 
@@ -375,7 +374,10 @@ function extractParameters(text) {
   }
 
   // Remove ICU blocks to avoid extracting nested variables
-  let cleanedText = text.replace(/\{(\w+)\s*,\s*(plural|select|selectordinal|number|date|time)\s*,[\s\S]*?\}/g, '');
+  let cleanedText = text.replace(
+    /\{(\w+)\s*,\s*(plural|select|selectordinal|number|date|time)\s*,[\s\S]*?\}/g,
+    ''
+  );
 
   // Extract simple variables: {var}
   const simpleVarRegex = /\{(\w+)\}/g;
@@ -391,6 +393,6 @@ function extractParameters(text) {
 
   return {
     variables: Array.from(variables),
-    tags: Array.from(tags)
+    tags: Array.from(tags),
   };
 }

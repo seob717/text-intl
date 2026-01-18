@@ -27,10 +27,9 @@ import { ReactNode } from 'react';
 /**
  * Extracts variable names from translation string patterns like "{name}"
  */
-export type ExtractVariables<T extends string> =
-  T extends `${string}{${infer Var}}${infer Rest}`
-    ? Var | ExtractVariables<Rest>
-    : never;
+export type ExtractVariables<T extends string> = T extends `${string}{${infer Var}}${infer Rest}`
+  ? Var | ExtractVariables<Rest>
+  : never;
 
 /**
  * Values object for translation variables and tag handlers
@@ -39,7 +38,10 @@ export type ExtractVariables<T extends string> =
 export type TranslationValues<T extends string = string> =
   ExtractVariables<T> extends never
     ? Record<string, string | number | TagHandler> | undefined
-    : { [K in ExtractVariables<T>]: string | number } & Record<string, string | number | TagHandler>;
+    : { [K in ExtractVariables<T>]: string | number } & Record<
+        string,
+        string | number | TagHandler
+      >;
 
 /** Tag handler function type (for React components) */
 export type TagHandler<T = ReactNode> = (content: T, locale: string) => ReactNode;
@@ -84,7 +86,7 @@ export type NamespaceOf<M extends Messages> = keyof M[LocaleOf<M>] & string;
 /** Extract translation keys for a namespace */
 export type TranslationKeyOf<
   M extends Messages,
-  N extends NamespaceOf<M>
+  N extends NamespaceOf<M>,
 > = keyof M[LocaleOf<M>][N] & string;
 
 // ============================================================================
@@ -95,11 +97,8 @@ export type TranslationKeyOf<
  * Generic translate function with key inference
  * Supports both hash keys and source text (when meta is provided)
  */
-export interface TypedTranslateFunction<M extends Messages, N extends NamespaceOf<M>> {
-  (
-    text: string,
-    values?: Record<string, string | number | Date | boolean | TagHandler>
-  ): ReactNode;
+export interface TypedTranslateFunction<M extends Messages, _N extends NamespaceOf<M>> {
+  (text: string, values?: Record<string, string | number | Date | boolean | TagHandler>): ReactNode;
 }
 
 /**
@@ -266,29 +265,29 @@ export function init(config: InitConfig): void;
  * @param values - Values for variable substitution
  * @param namespace - Message namespace (default: 'common')
  * @returns Translated text
- * 
+ *
  * @example
  * // Simple translation
  * t("안녕하세요")  // → "Hello"
- * 
+ *
  * // With variables
  * t("안녕 {name}", { name: "철수" })  // → "Hello 철수"
- * 
+ *
  * // ICU Plural
  * t("{count, plural, =0 {no items} one {# item} other {# items}}", { count: 5 })
  * // → "5 items"
- * 
+ *
  * // ICU Select
  * t("{gender, select, male {He} female {She} other {They}}", { gender: "male" })
  * // → "He"
- * 
+ *
  * // ICU Combined
  * t("{name} has {count, plural, one {# item} other {# items}}", { name: "John", count: 3 })
  * // → "John has 3 items"
  */
 export function t(
-  text: string, 
-  values?: Record<string, string | number | Date | boolean>, 
+  text: string,
+  values?: Record<string, string | number | Date | boolean>,
   namespace?: string
 ): string;
 

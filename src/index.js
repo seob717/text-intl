@@ -19,7 +19,7 @@ const DEFAULT_NAMESPACE = 'common';
  */
 function isICUMessage(text) {
   if (typeof text !== 'string') return false;
-  
+
   // Check for ICU patterns: {variable, type, ...}
   // Types: plural, select, selectordinal, number, date, time
   return /\{\s*\w+\s*,\s*(plural|select|selectordinal|number|date|time)/.test(text);
@@ -57,18 +57,18 @@ export function init(config) {
  * @param {Object} values - Variable replacements
  * @param {string} namespace - Namespace (default: 'common')
  * @returns {string} Translated text
- * 
+ *
  * @example
  * // Simple translation
  * t("안녕하세요")  // → "Hello"
- * 
+ *
  * // With variables
  * t("안녕 {name}", { name: "철수" })  // → "Hello 철수"
- * 
+ *
  * // ICU Plural
  * t("{count, plural, =0 {no items} one {# item} other {# items}}", { count: 5 })
  * // → "5 items"
- * 
+ *
  * // ICU Select
  * t("{gender, select, male {He} female {She} other {They}}", { gender: "male" })
  * // → "He"
@@ -78,7 +78,7 @@ export function t(text, values, namespace = DEFAULT_NAMESPACE) {
 
   // Try to find hash via meta mapping
   const hash = meta[locale]?.[namespace]?.[text];
-  
+
   if (hash) {
     // Found hash in current locale's meta, look up translation
     translated = messages[locale]?.[namespace]?.[hash];
@@ -90,7 +90,7 @@ export function t(text, values, namespace = DEFAULT_NAMESPACE) {
   // Try fallback locale if translation not found
   if (!translated && fallbackLocale) {
     const fallbackHash = meta[fallbackLocale]?.[namespace]?.[text];
-    
+
     if (fallbackHash) {
       translated = messages[fallbackLocale]?.[namespace]?.[fallbackHash];
     } else {
@@ -113,7 +113,7 @@ export function t(text, values, namespace = DEFAULT_NAMESPACE) {
     try {
       const formatter = new IntlMessageFormat(translated, locale);
       const formatted = formatter.format(values);
-      
+
       // IntlMessageFormat can return string or array of parts
       return typeof formatted === 'string' ? formatted : formatted.join('');
     } catch (error) {
@@ -127,7 +127,7 @@ export function t(text, values, namespace = DEFAULT_NAMESPACE) {
 
   // Simple variable substitution for non-ICU messages
   if (values && typeof translated === 'string') {
-    Object.keys(values).forEach(key => {
+    Object.keys(values).forEach((key) => {
       const value = values[key];
       if (typeof value === 'string' || typeof value === 'number') {
         translated = translated.replace(`{${key}}`, value);

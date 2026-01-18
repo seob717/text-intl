@@ -11,7 +11,7 @@ import { glob } from 'glob';
  */
 function extractVariables(text) {
   const matches = text.match(/\{(\w+)\}/g) || [];
-  return matches.map(m => m.slice(1, -1));
+  return matches.map((m) => m.slice(1, -1));
 }
 
 /**
@@ -90,8 +90,8 @@ export async function validateTranslations(config) {
         const sourceVars = extractVariables(sourceValue);
         const targetVars = extractVariables(targetValue);
 
-        const missingVars = sourceVars.filter(v => !targetVars.includes(v));
-        const extraVars = targetVars.filter(v => !sourceVars.includes(v));
+        const missingVars = sourceVars.filter((v) => !targetVars.includes(v));
+        const extraVars = targetVars.filter((v) => !sourceVars.includes(v));
 
         if (missingVars.length > 0 || extraVars.length > 0) {
           issues.push({
@@ -110,7 +110,7 @@ export async function validateTranslations(config) {
       }
 
       // Check for extra keys in target (not in source)
-      const extraKeys = Object.keys(targetMessages).filter(k => !keys.includes(k));
+      const extraKeys = Object.keys(targetMessages).filter((k) => !keys.includes(k));
       for (const key of extraKeys) {
         issues.push({
           type: 'extra',
