@@ -49,4 +49,4 @@ jobs:
           npm config set registry https://registry.npmjs.org/
           npm config delete //registry.npmjs.org/:_authToken || true
 
-      - run: npm publish
+      - run: npm publish --provenance
