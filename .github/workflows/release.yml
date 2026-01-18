@@ -43,5 +43,10 @@ jobs:
       - run: pnpm build
       - run: pnpm test
 
-      # ✅ 토큰/OTP 없이 배포
+      - name: Ensure npm uses public registry without tokens
+        run: |
+          rm -f ~/.npmrc
+          npm config set registry https://registry.npmjs.org/
+          npm config delete //registry.npmjs.org/:_authToken || true
+
       - run: npm publish
