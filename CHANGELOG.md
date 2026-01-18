@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/seob717/text-intl/compare/v1.1.0...v1.1.1) (2026-01-18)
+
+
+### Bug Fixes
+
+* trigger release again ([038be36](https://github.com/seob717/text-intl/commit/038be36aa75b14ec5169c09f7edaf48cb0c2bb5e))
+
 ## [1.1.0](https://github.com/seob717/text-intl/compare/v1.0.0...v1.1.0) (2026-01-18)
 
 
