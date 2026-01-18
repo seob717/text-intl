@@ -26,6 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
         with:
@@ -38,8 +40,8 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build --if-present
-      - run: pnpm test --if-present
+      - run: pnpm build
+      - run: pnpm test
 
       # ✅ 토큰/OTP 없이 배포
       - run: npm publish
