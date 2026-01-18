@@ -1,40 +1,40 @@
 # text-intl
 
-> 일반 텍스트 키를 사용하는 타입 안전 국제화 라이브러리
+> Type-safe internationalization with plain text keys
 
 [![npm version](https://img.shields.io/npm/v/text-intl.svg)](https://www.npmjs.com/package/text-intl)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-[English](./README.en.md)
+[한국어](./README.ko.md)
 
 ---
 
-## 철학
+## Philosophy
 
-**보이는 대로 작성하고, 작성한 대로 보입니다.**
+**Write what you see. See what you write.**
 
 ```typescript
-// 코드에서 - 일반 텍스트 그대로 사용
-t("안녕하세요")
+// In your code - use plain text directly
+t("Hello World")
 ```
 
-코드에서는 자연어를 그대로 작성합니다. 내부적으로 해시 기반 키 매핑을 통해 효율적으로 관리됩니다.
+Write natural language directly in your code. Internally managed through hash-based key mapping for efficiency.
 
 ---
 
-## 특징
+## Features
 
-- **일반 텍스트 키** - 코드에서 자연어를 그대로 사용
-- **타입 안전** - TypeScript 지원
-- **Gettext 스타일** - 코드에 `t("안녕하세요")` 직접 작성
-- **ICU MessageFormat** - 복수형, 조건부, 숫자/날짜 포맷
-- **React 지원** - 훅과 Provider 제공
-- **자동 추출** - CLI가 코드에서 메시지 자동 추출
-- **Tree-shakeable** - ESM + CJS 지원
+- **Plain Text Keys** - Use natural language directly in code
+- **Type-Safe** - TypeScript support
+- **Gettext-style** - Write `t("Hello World")` directly in code
+- **ICU MessageFormat** - Pluralization, select, number/date formatting
+- **React Support** - Hooks and Provider included
+- **Auto-extraction** - CLI extracts messages from code
+- **Tree-shakeable** - ESM + CJS support
 
 ---
 
-## 설치
+## Installation
 
 ```bash
 npm install text-intl
@@ -42,21 +42,21 @@ npm install text-intl
 
 ---
 
-## 빠른 시작
+## Quick Start
 
-### 1. 설정 파일 생성
+### 1. Create Configuration
 
 ```ts
 // i18n.config.ts
 export default {
-  sourceLocale: 'ko',
-  locales: ['ko', 'en'],
+  sourceLocale: 'en',
+  locales: ['en', 'fr', 'es'],
   messagesDir: './messages',
   include: ['src/**/*.{ts,tsx}'],
 };
 ```
 
-### 2. React Provider 설정
+### 2. Setup React Provider
 
 ```tsx
 // app/providers/i18n-provider.tsx
@@ -64,26 +64,26 @@ export default {
 
 import { setupI18n } from 'text-intl/react';
 
-import koMessages from '@/messages/ko/common.json';
-import koMeta from '@/messages/ko/common.meta.json';
 import enMessages from '@/messages/en/common.json';
 import enMeta from '@/messages/en/common.meta.json';
+import frMessages from '@/messages/fr/common.json';
+import frMeta from '@/messages/fr/common.meta.json';
 
 export const { I18nProvider, useTranslation, useLocale } = setupI18n({
   messages: {
-    ko: { common: koMessages },
     en: { common: enMessages },
+    fr: { common: frMessages },
   },
   meta: {
-    ko: { common: koMeta },
     en: { common: enMeta },
+    fr: { common: frMeta },
   },
-  defaultLocale: 'ko',
-  fallbackLocale: 'ko',
+  defaultLocale: 'en',
+  fallbackLocale: 'en',
 });
 ```
 
-### 3. 앱 래핑
+### 3. Wrap Your App
 
 ```tsx
 // app/layout.tsx
@@ -100,7 +100,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-### 4. 컴포넌트에서 사용
+### 4. Use in Components
 
 ```tsx
 'use client';
@@ -113,81 +113,81 @@ export default function HomePage() {
 
   return (
     <div>
-      <h1>{t('안녕하세요')}</h1>
-      <p>{t('{name}님 환영합니다', { name: '사용자' })}</p>
+      <h1>{t('Hello World')}</h1>
+      <p>{t('Welcome {name}', { name: 'User' })}</p>
 
-      <button onClick={() => setLocale('ko')}>한국어</button>
       <button onClick={() => setLocale('en')}>English</button>
+      <button onClick={() => setLocale('fr')}>Français</button>
     </div>
   );
 }
 ```
 
-### 5. 메시지 추출
+### 5. Extract Messages
 
 ```bash
-# 코드에서 메시지 추출
+# Extract messages from code
 npx text-intl extract
 
-# Watch 모드
+# Watch mode
 npx text-intl watch
 
-# 번역 검증
+# Validate translations
 npx text-intl validate
 ```
 
-추출 결과:
+Output structure:
 ```
 messages/
-├── ko/
-│   ├── common.json        # 해시 → 번역
-│   └── common.meta.json   # 원문 → 해시 매핑
-└── en/
+├── en/
+│   ├── common.json        # hash → translation
+│   └── common.meta.json   # source text → hash mapping
+└── fr/
     ├── common.json
     └── common.meta.json
 ```
 
 ---
 
-## 사용 예제
+## Usage Examples
 
-### 변수
+### Variables
 
 ```tsx
-t('{name}님 안녕하세요', { name: '철수' })
-// → "철수님 안녕하세요"
+t('Hello {name}', { name: 'John' })
+// → "Hello John"
 ```
 
-### 복수형 (ICU)
+### Pluralization (ICU)
 
 ```tsx
-t('{count, plural, =0 {항목 없음} other {# 항목}}', { count: 5 })
-// → "5 항목"
+t('{count, plural, =0 {No items} one {# item} other {# items}}', { count: 5 })
+// → "5 items"
 ```
 
-### 조건부 (Select)
+### Select (Conditional)
 
 ```tsx
-t('{gender, select, male {그가} female {그녀가} other {그들이}} 좋아합니다',
+t('{gender, select, male {He} female {She} other {They}} liked your post',
   { gender: 'female' }
 )
-// → "그녀가 좋아합니다"
+// → "She liked your post"
 ```
 
-### 컴포넌트 태그
+### Component Tags
 
 ```tsx
-t('<link>여기</link>를 클릭하세요', {
+t('Click <link>here</link> to continue', {
   link: (children) => <a href="/next">{children}</a>
 })
-// → <a href="/next">여기</a>를 클릭하세요
+// → Click <a href="/next">here</a> to continue
 ```
 
-### 네임스페이스
+### Namespaces
 
 ```tsx
 const { t } = useTranslation('dashboard');
-t('대시보드 제목')
+t('Dashboard Title')
 ```
 
 ---
@@ -200,17 +200,17 @@ t('대시보드 제목')
 import { init, t, getLocale, setLocale } from 'text-intl';
 
 init({
-  locale: 'ko',
-  messages: { ko: { common: {...} } },
-  meta: { ko: { common: {...} } },
-  fallbackLocale: 'ko'
+  locale: 'en',
+  messages: { en: { common: {...} } },
+  meta: { en: { common: {...} } },
+  fallbackLocale: 'en'
 });
 
-t('안녕하세요');
-t('{name}님', { name: '철수' });
+t('Hello World');
+t('Hello {name}', { name: 'John' });
 
-getLocale(); // 'ko'
-setLocale('en');
+getLocale(); // 'en'
+setLocale('fr');
 ```
 
 ### React
@@ -219,10 +219,10 @@ setLocale('en');
 import { setupI18n } from 'text-intl/react';
 
 const { I18nProvider, useTranslation, useLocale } = setupI18n({
-  messages: { ko: { common: {...} } },
-  meta: { ko: { common: {...} } },
-  defaultLocale: 'ko',
-  fallbackLocale: 'ko',
+  messages: { en: { common: {...} } },
+  meta: { en: { common: {...} } },
+  defaultLocale: 'en',
+  fallbackLocale: 'en',
   components: {
     bold: (children) => <strong>{children}</strong>
   }
@@ -231,14 +231,14 @@ const { I18nProvider, useTranslation, useLocale } = setupI18n({
 
 ---
 
-## 설정
+## Configuration
 
 ### i18n.config.ts
 
 ```typescript
 export default {
-  sourceLocale: 'ko',
-  locales: ['ko', 'en', 'ja'],
+  sourceLocale: 'en',
+  locales: ['en', 'fr', 'es', 'de'],
   messagesDir: './messages',
   include: ['src/**/*.{ts,tsx,js,jsx}'],
   exclude: ['**/*.test.*', '**/node_modules/**'],
@@ -247,24 +247,26 @@ export default {
 
 ---
 
-## 이슈 및 기여
+## Issues & Contributing
 
-버그 제보나 기능 요청은 [GitHub Issues](https://github.com/seob717/text-intl/issues)에 등록해주세요.
+Report bugs or request features on [GitHub Issues](https://github.com/seob717/text-intl/issues).
 
-### 버그 제보 시 포함할 내용
+### Bug Reports
 
-- text-intl 버전
-- Node.js 버전
-- 재현 가능한 최소 코드
-- 예상 동작과 실제 동작
+Please include:
+- text-intl version
+- Node.js version
+- Minimal reproducible code
+- Expected vs actual behavior
 
-### 기능 요청 시 포함할 내용
+### Feature Requests
 
-- 사용 사례 설명
-- 기대하는 동작
+Please include:
+- Use case description
+- Expected behavior
 
 ---
 
-## 라이선스
+## License
 
 MIT
