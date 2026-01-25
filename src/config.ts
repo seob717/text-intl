@@ -51,4 +51,6 @@ export interface I18nConfig {
  * });
  * ```
  */
-export function defineConfig(config: I18nConfig): I18nConfig;
+export function defineConfig(config: I18nConfig): I18nConfig {
+  return config;
+}

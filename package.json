@@ -30,16 +30,14 @@
   },
   "files": [
     "dist",
-    "cli",
-    "src/*.d.ts"
+    "cli"
   ],
   "sideEffects": false,
   "bin": {
     "text-intl": "./cli/index.js"
   },
   "scripts": {
-    "build": "tsup && pnpm build:types",
-    "build:types": "node scripts/copy-types.js",
+    "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",
     "test:watch": "vitest",
