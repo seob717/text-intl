@@ -1,13 +1,13 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig([
-  // Core library (index.js)
+  // Core library (index.ts)
   {
     entry: {
-      index: 'src/index.js',
+      index: 'src/index.ts',
     },
     format: ['esm', 'cjs'],
-    dts: false, // 수동으로 작성된 .d.ts 파일 사용
+    dts: true, // TypeScript 소스에서 자동 타입 생성
     outDir: 'dist',
     clean: true,
     sourcemap: true,
@@ -15,13 +15,13 @@ export default defineConfig([
     splitting: false,
     external: ['intl-messageformat'],
   },
-  // React adapter (react.jsx)
+  // React adapter (react.tsx)
   {
     entry: {
-      react: 'src/react.jsx',
+      react: 'src/react.tsx',
     },
     format: ['esm', 'cjs'],
-    dts: false, // 수동으로 작성된 .d.ts 파일 사용
+    dts: true, // TypeScript 소스에서 자동 타입 생성
     outDir: 'dist',
     clean: false,
     sourcemap: true,
@@ -38,26 +38,26 @@ export default defineConfig([
       options.jsxFragment = 'React.Fragment';
     },
   },
-  // Config (config.js)
+  // Config (config.ts)
   {
     entry: {
-      config: 'src/config.js',
+      config: 'src/config.ts',
     },
     format: ['esm', 'cjs'],
-    dts: false, // 수동으로 작성된 .d.ts 파일 사용
+    dts: true, // TypeScript 소스에서 자동 타입 생성
     outDir: 'dist',
     clean: false,
     sourcemap: true,
     treeshake: true,
     splitting: false,
   },
-  // Errors (errors.js)
+  // Errors (errors.ts)
   {
     entry: {
-      errors: 'src/errors.js',
+      errors: 'src/errors.ts',
     },
     format: ['esm', 'cjs'],
-    dts: false, // 수동으로 작성된 .d.ts 파일 사용
+    dts: true, // TypeScript 소스에서 자동 타입 생성
     outDir: 'dist',
     clean: false,
     sourcemap: true,

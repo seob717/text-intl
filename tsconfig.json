@@ -5,7 +5,7 @@
     "lib": ["ES2020", "DOM"],
     "jsx": "react",
     "moduleResolution": "bundler",
-    "allowJs": true,
+    "allowJs": false,
     "checkJs": false,
     "declaration": true,
     "declarationMap": true,
