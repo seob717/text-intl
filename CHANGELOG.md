@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/seob717/text-intl/compare/v1.0.1...v1.1.0) (2026-01-27)
+
+
+### Features
+
+* add AI-powered translation with configurable rules ([ff39386](https://github.com/seob717/text-intl/commit/ff3938654e62b944c5abf3222ea548d9ce88d337))
+* add AI-powered translation with configurable rules ([d998410](https://github.com/seob717/text-intl/commit/d99841034197f9ec2d97e282cede5e40676a5939))
+
 ## [1.0.1](https://github.com/seob717/text-intl/compare/v1.0.0...v1.0.1) (2026-01-18)
 
 
