@@ -348,7 +348,7 @@ export type Locale = ${config.locales.map((l) => `'${l}'`).join(' | ')};
       }
     }
   }
-  typeDefinition += `  Record<string, any>;\n`;
+  typeDefinition += `  Record<string, unknown>;\n`;
 
   // Write to file
   const outputPath = resolve(messagesDir, 'types.ts');

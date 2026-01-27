@@ -1,0 +1,16 @@
+{
+  "Active sessions: {count}": "2c1722b7",
+  "Create New Report": "a3000bd2",
+  "Dashboard": "67b69646",
+  "Export Data": "2ed22740",
+  "Last login: {time}": "11f6f31e",
+  "Manage Users": "3a943f56",
+  "Quick Actions": "2cc2b6f7",
+  "Recent Activity": "9ef7d438",
+  "Revenue this month: {amount}": "11b10b08",
+  "Statistics": "a656107e",
+  "Total users: {count}": "1cc78edf",
+  "View Analytics": "a5361cb0",
+  "Welcome back, {username}!": "c816938b",
+  "{count, plural, =0 {No new notifications} one {# new notification} other {# new notifications}}": "d300f004"
+}

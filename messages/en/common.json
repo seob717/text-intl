@@ -1,0 +1,16 @@
+{
+  "1f8ecc24": "Help & Support",
+  "21f29224": "All rights reserved.",
+  "2b5c3d26": "Contact",
+  "3a786953": "Home",
+  "48e1645a": "Hello, {name}!",
+  "4afa55bf": "Terms of Service",
+  "506ff394": "Privacy Policy",
+  "5d8c71ab": "About Us",
+  "620dc697": "This is a sample app for testing internationalization.",
+  "85dad5f3": "{count, plural, =0 {No items} one {# item} other {# items}} in your cart",
+  "c416d899": "Welcome to our application",
+  "cbeb79d8": "You have {count} new messages",
+  "f32f6948": "Your order of {itemCount} items totaling {price} will arrive on {date}",
+  "f3606484": "Click <link>here</link> to learn more"
+}

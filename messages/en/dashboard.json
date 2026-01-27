@@ -1,0 +1,16 @@
+{
+  "11b10b08": "Revenue this month: {amount}",
+  "11f6f31e": "Last login: {time}",
+  "1cc78edf": "Total users: {count}",
+  "2c1722b7": "Active sessions: {count}",
+  "2cc2b6f7": "Quick Actions",
+  "2ed22740": "Export Data",
+  "3a943f56": "Manage Users",
+  "67b69646": "Dashboard",
+  "9ef7d438": "Recent Activity",
+  "a3000bd2": "Create New Report",
+  "a5361cb0": "View Analytics",
+  "a656107e": "Statistics",
+  "c816938b": "Welcome back, {username}!",
+  "d300f004": "{count, plural, =0 {No new notifications} one {# new notification} other {# new notifications}}"
+}
