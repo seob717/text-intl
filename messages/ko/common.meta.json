@@ -1,0 +1,16 @@
+{
+  "About Us": "5d8c71ab",
+  "All rights reserved.": "21f29224",
+  "Click <link>here</link> to learn more": "f3606484",
+  "Contact": "2b5c3d26",
+  "Hello, {name}!": "48e1645a",
+  "Help & Support": "1f8ecc24",
+  "Home": "3a786953",
+  "Privacy Policy": "506ff394",
+  "Terms of Service": "4afa55bf",
+  "This is a sample app for testing internationalization.": "620dc697",
+  "Welcome to our application": "c416d899",
+  "You have {count} new messages": "cbeb79d8",
+  "Your order of {itemCount} items totaling {price} will arrive on {date}": "f32f6948",
+  "{count, plural, =0 {No items} one {# item} other {# items}} in your cart": "85dad5f3"
+}
